@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Education - Willis Ogecha{% endblock %}
+
+{% block content %}
+<section class="experience-section">
+    <header class="section-header">
+        <h1>Education</h1>
+        <p>My academic journey and qualifications</p>
+    </header>
+
+    <div class="timeline">
+        {% for edu in educations %}
+        <div class="timeline-item fade-in">
+            <div class="timeline-date">{{ edu.start_year }}</div>
+            <div class="timeline-content">
+                <h3>{{ edu.degree }}</h3>
+                <h4>{{ edu.institution }}</h4>
+
+                {% if edu.field_of_study %}
+                <p><strong>Field of Study:</strong> {{ edu.field_of_study }}</p>
+                {% endif %}
+
+                {% if edu.grade %}
+                <p><strong>Grade:</strong> {{ edu.grade }}</p>
+                {% endif %}
+
+                <p><strong>Duration:</strong> {{ edu.year_range }}</p>
+
+                {% if edu.description %}
+                <p style="margin-top: 1rem;">{{ edu.description }}</p>
+                {% endif %}
+            </div>
+        </div>
+        {% empty %}
+        <div class="timeline-content">
+            <p>No education entries yet. Add them in the admin panel!</p>
+        </div>
+        {% endfor %}
+    </div>
+</section>
+{% endblock %}

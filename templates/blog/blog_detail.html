@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}{{ post.title }} - Willis Ogecha{% endblock %}
+
+{% block content %}
+<article class="blog-post-detail">
+    <div class="blog-post-header">
+        {% if post.category %}
+        <span class="blog-category">{{ post.category }}</span>
+        {% endif %}
+
+        <h1>{{ post.title }}</h1>
+
+        <div class="blog-post-meta">
+            <span>📅 {{ post.created_at|date:"F d, Y" }}</span>
+            {% if post.updated_at != post.created_at %}
+            <span>✏️ Updated {{ post.updated_at|date:"F d, Y" }}</span>
+            {% endif %}
+        </div>
+
+        {% if post.get_tags_list %}
+        <div class="blog-tags">
+            {% for tag in post.get_tags_list %}
+            <span class="tag">{{ tag }}</span>
+            {% endfor %}
+        </div>
+        {% endif %}
+    </div>
+
+    {% if post.cover_image %}
+    <div class="blog-post-image">
+        <img src="{{ post.cover_image.url }}" alt="{{ post.title }}">
+    </div>
+    {% endif %}
+
+    <div class="blog-post-content">
+        {{ post.content|linebreaks }}
+    </div>
+
+    <div class="blog-post-footer">
+        <a href="{% url 'blog:blog_list' %}" class="back-link">← Back to Blog</a>
+    </div>
+</article>
+{% endblock %}

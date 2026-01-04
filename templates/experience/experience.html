@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Experience - Willis Ogecha{% endblock %}
+
+{% block content %}
+<section class="experience-section">
+    <header class="section-header">
+        <h1>Professional Experience</h1>
+        <p>A snapshot of my professional and technical journey</p>
+    </header>
+
+    <div class="timeline">
+        {% for exp in experiences %}
+        <div class="timeline-item fade-in">
+            <div class="timeline-date">{{ exp.year }}</div>
+            <div class="timeline-content">
+                <h3>{{ exp.role }}</h3>
+                <h4>{{ exp.organization }}</h4>
+                <p>{{ exp.description }}</p>
+
+                {% if exp.skill_list %}
+                <ul>
+                    {% for skill in exp.skill_list %}
+                    <li>{{ skill }}</li>
+                    {% endfor %}
+                </ul>
+                {% endif %}
+            </div>
+        </div>
+        {% empty %}
+        <div class="timeline-content">
+            <p>No experience entries yet.</p>
+        </div>
+        {% endfor %}
+    </div>
+
+    {% if certifications %}
+    <div class="certifications-section">
+        <h2>Certifications</h2>
+        <div class="certifications-grid">
+            {% for cert in certifications %}
+            <div class="cert-card">
+                <h3>{{ cert.name }}</h3>
+                <p><strong>{{ cert.issuer }}</strong></p>
+                <p>Issued: {{ cert.issue_date|date:"F Y" }}</p>
+                {% if cert.credential_url %}
+                <a href="{{ cert.credential_url }}" target="_blank" style="color: #0ea5e9; font-weight: 600;">View
+                    Credential →</a>
+                {% endif %}
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+    {% endif %}
+</section>
+{% endblock %}

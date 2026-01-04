@@ -1,0 +1,81 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Willis Ogecha - Portfolio{% endblock %}
+
+{% block content %}
+<section class="hero">
+    <div class="hero-container">
+        {% if settings.profile_image %}
+        <div class="hero-image">
+            <img src="{{ settings.profile_image.url }}" alt="{{ settings.name }}">
+        </div>
+        {% endif %}
+
+        <div class="hero-text">
+            <h1>
+                Hi, I'm <span class="highlight">{{ settings.name|default:"Willis Ogecha" }}</span>
+            </h1>
+
+            <h2>
+                {{ settings.title|default:"Machine Learning & Software Engineer" }}
+            </h2>
+            <p>
+                {% if settings and settings.bio %}
+                {{ settings.bio }}
+                {% else %}
+                I build intelligent, data-driven solutions using Machine Learning, Computer Vision, and modern backend
+                technologies.
+                {% endif %}
+            </p>
+
+            <div class="hero-actions">
+                <a href="{% url 'projects:project_list' %}" class="btn btn-primary">
+                    View Projects
+                </a>
+
+                {% if settings.cv_file %}
+                <a href="{{ settings.cv_file.url }}" class="btn btn-secondary" download>
+                    📄 Download CV
+                </a>
+                {% else %}
+                <a href="{% url 'contact' %}" class="btn btn-secondary">
+                    Contact Me
+                </a>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Skills Section -->
+{% if skills_by_category %}
+<section class="skills-section">
+    <div class="skills-container">
+        <header class="section-header">
+            <h2>Skills & Technologies</h2>
+            <p>Tools and technologies I work with</p>
+        </header>
+
+        <div class="skills-carousel">
+            <div class="carousel-track">
+                {% for category, skills in skills_by_category.items %}
+                {% for skill in skills %}
+                <div class="skill-card">
+                    <div class="skill-card-content">
+                        <div class="skill-icon">💻</div>
+                        <h3>{{ skill.name }}</h3>
+                        <p class="skill-card-category">{{ skill.category }}</p>
+                    </div>
+                </div>
+                {% endfor %}
+                {% endfor %}
+            </div>
+
+            <!-- Navigation Dots -->
+            <div class="carousel-dots"></div>
+        </div>
+    </div>
+</section>
+{% endif %}
+{% endblock %}
